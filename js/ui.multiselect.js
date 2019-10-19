@@ -55,7 +55,7 @@ $.widget("ui.multiselect", {
 		this.selectedList = $('<ul class="selected connected-list"><li class="ui-helper-hidden-accessible"></li></ul>').bind('selectstart', function(){return false;}).appendTo(this.selectedContainer);
 		this.availableList = $('<ul class="available connected-list"><li class="ui-helper-hidden-accessible"></li></ul>').bind('selectstart', function(){return false;}).appendTo(this.availableContainer);
 		
-		var that = this;
+		let that = this;
 
 		// set dimensions
 		this.container.width(this.element.width()+1);
@@ -120,7 +120,7 @@ $.widget("ui.multiselect", {
 		});
 		
 		this.container.find(".add-all").click(function() {
-			var options = that.element.find('option').not(":selected");
+			let options = that.element.find('option').not(":selected");
 			if (that.availableList.children('li:hidden').length > 1) {
 				that.availableList.children('li').each(function(i) {
 					if ($(this).is(":visible")) $(options[i-1]).attr('selected', 'selected'); 
@@ -143,9 +143,9 @@ $.widget("ui.multiselect", {
 		this.availableList.children('.ui-element').remove();
 		this.count = 0;
 
-		var that = this;
-		var items = $(options.map(function(i) {
-	      var item = that._getOptionNode(this).appendTo(this.selected ? that.selectedList : that.availableList).show();
+		let that = this;
+		let items = $(options.map(function(i) {
+	      let item = that._getOptionNode(this).appendTo(this.selected ? that.selectedList : that.availableList).show();
 
 			if (this.selected) that.count += 1;
 			that._applyItemState(item, this.selected);
@@ -163,14 +163,14 @@ $.widget("ui.multiselect", {
 	},
 	_getOptionNode: function(option) {
 		option = $(option);
-		var node = $('<li class="ui-state-default ui-element" title="'+option.text()+'" data-selected-value="' + option.val() + '"><span class="ui-icon"/>'+option.text()+'<a href="#" class="action"><span class="ui-corner-all ui-icon"/></a></li>').hide();
+		let node = $('<li class="ui-state-default ui-element" title="'+option.text()+'" data-selected-value="' + option.val() + '"><span class="ui-icon"/>'+option.text()+'<a href="#" class="action"><span class="ui-corner-all ui-icon"/></a></li>').hide();
 		node.data('optionLink', option);
 		return node;
 	},
 	// clones an item with associated data
 	// didn't find a smarter away around this
 	_cloneWithData: function(clonee) {
-		var clone = clonee.clone(false,false);
+		let clone = clonee.clone(false,false);
 		clone.data('optionLink', clonee.data('optionLink'));
 		clone.data('idx', clonee.data('idx'));
 		return clone;
@@ -179,7 +179,7 @@ $.widget("ui.multiselect", {
 		item.data('optionLink').attr('selected', selected);
 
 		if (selected) {
-			var selectedItem = this._cloneWithData(item);
+			let selectedItem = this._cloneWithData(item);
 			item[this.options.hide](this.options.animated, function() { $(this).remove(); });
 			selectedItem.appendTo(this.selectedList).hide()[this.options.show](this.options.animated);
 			
@@ -188,8 +188,8 @@ $.widget("ui.multiselect", {
 		} else {
 			
 			// look for successor based on initial option index
-			var items = this.availableList.find('li'), comparator = this.options.nodeComparator;
-			var succ = null, i = item.data('idx'), direction = comparator(item, $(items[i]));
+			let items = this.availableList.find('li'), comparator = this.options.nodeComparator;
+			let succ = null, i = item.data('idx'), direction = comparator(item, $(items[i]));
 
 			// TODO: test needed for dynamic list populating
 			if ( direction ) {
@@ -205,7 +205,7 @@ $.widget("ui.multiselect", {
 				succ = items[i];
 			}
 			
-			var availableItem = this._cloneWithData(item);
+			let availableItem = this._cloneWithData(item);
 			succ ? availableItem.insertBefore($(succ)) : availableItem.appendTo(this.availableList);
 			item[this.options.hide](this.options.animated, function() { $(this).remove(); });
 			availableItem.hide()[this.options.show](this.options.animated);
